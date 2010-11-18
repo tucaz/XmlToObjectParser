@@ -1,0 +1,44 @@
+A simple dynamic library implemented in C# 4.0 to deal with XML structure
+
+Assume the following XML sample:
+
+_sampleXml = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
+                <catalog>
+                  <cd country=""USA"">
+                    <title>Empire Burlesque</title>
+                    <artist>Bob Dylan</artist>
+                    <price>10.90</price>
+                  </cd>
+                  <cd country=""UK"">
+                    <title>Hide your heart</title>
+                    <artist>Bonnie Tyler</artist>
+                    <price>10.0</price>
+                  </cd>
+                  <cd country=""USA"">
+                    <title>Greatest Hits</title>
+                    <artist>Dolly Parton</artist>
+                    <price>9.90</price>
+                  </cd>
+                </catalog>";
+
+The idea behind this is to able to read with XML as if it were a simple POCO instead of a confusing text structure. I know now it's possible to do something like this:
+
+    var catalog = new XmlDocument();
+    catalog.LoadXml(_sampleXml);
+
+    var numberOfCDsinCatalog = catalog["catalog"].ChildNodes.Count; //Three 
+    var titleFromUKCD = catalog.SelectSingleNode("/catalog/cd[2]/title").InnerText; //"Hide your heart"
+
+But using an object approach the code is way more readable and far more extensible:
+
+    var catalog = XmlToObjectParser.ParseFromXml(_sampleXml);
+
+    var numberOfCDsinCatalog = catalog.catalog.cd.Count; //Same Three
+    var titleFromUKCD = catalog.catalog.cd[1].title; // Same Hide your heart"
+    
+We can also have more readable queries:
+
+    var allCDsFromUSA = (Predicate<dynamic>)((dynamic x) => x.country == "USA");
+    var CDsFound = catalog.catalog.cd.FindAll(whereClause);
+    
+Besides the fact that we can take advantage of dynamic types to add whatever behavior we want into our objects.
