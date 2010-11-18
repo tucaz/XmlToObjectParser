@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace XmlToObjectParser.Tests
 {
