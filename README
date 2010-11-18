@@ -27,3 +27,5 @@ With XmlToObjectParser is possible to traversal this XML like this:
     var titleFromUKCD = catalog.catalog.cd[1].title; // "Hide your heart"
     
 For more details take a look at the documentation on the Wiki: https://github.com/tucaz/XmlToObjectParser/wiki/Getting-Started
+
+*Special thanks to @MemphisBR for reviewing the code
