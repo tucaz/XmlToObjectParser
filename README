@@ -21,24 +21,9 @@ _sampleXml = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
                   </cd>
                 </catalog>";
 
-The idea behind this is to able to read with XML as if it were a simple POCO instead of a confusing text structure. I know now it's possible to do something like this:
+With XmlToObjectParser is possible to traversal this XML like this:
 
-    var catalog = new XmlDocument();
-    catalog.LoadXml(_sampleXml);
-
-    var numberOfCDsinCatalog = catalog["catalog"].ChildNodes.Count; //Three 
-    var titleFromUKCD = catalog.SelectSingleNode("/catalog/cd[2]/title").InnerText; //"Hide your heart"
-
-But using an object approach the code is way more readable and far more extensible:
-
-    var catalog = XmlToObjectParser.ParseFromXml(_sampleXml);
-
-    var numberOfCDsinCatalog = catalog.catalog.cd.Count; //Same Three
-    var titleFromUKCD = catalog.catalog.cd[1].title; // Same Hide your heart"
+    var numberOfCDsinCatalog = catalog.catalog.cd.Count; //Results in the number Three
+    var titleFromUKCD = catalog.catalog.cd[1].title; // "Hide your heart"
     
-We can also have more readable queries:
-
-    var allCDsFromUSA = (Predicate<dynamic>)((dynamic x) => x.country == "USA");
-    var CDsFound = catalog.catalog.cd.FindAll(whereClause);
-    
-Besides the fact that we can take advantage of dynamic types to add whatever behavior we want into our objects.
+For more details take a look at the documentation on the Wiki: https://github.com/tucaz/XmlToObjectParser/wiki/Getting-Started
