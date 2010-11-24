@@ -48,7 +48,7 @@ namespace XmlToObjectParser.Tests
         [Test]
         public void xml_to_object_parsing()
         {
-            var catalog = XmlToObjectParser.ParseFromXml(_sampleXml);
+            var catalog = DynamicXmlParser.ParseFromXml(_sampleXml);
 
             var numberOfCDsinCatalog = catalog.catalog.cd.Count;
             var titleFromUKCD = catalog.catalog.cd[1].title;            
