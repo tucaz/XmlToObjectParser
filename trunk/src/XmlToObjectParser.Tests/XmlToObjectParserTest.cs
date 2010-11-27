@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using NUnit.Framework;
+using System.IO;
 
 namespace XmlToObjectParser.Tests
 {
@@ -55,6 +56,19 @@ namespace XmlToObjectParser.Tests
 
             Assert.That(numberOfCDsinCatalog == 3);
             Assert.That(titleFromUKCD == "Hide your heart");
+        }
+
+        [Test] 
+        public void can_parse_xml_with_two_equal_elements()
+        {
+            var xml = @"<xml>
+                            <node>FirstEqual</node>
+                            <node>SecondEqual</node>
+                        </xml>";
+
+            var parsedObject = XmlToObjectParser.ParseFromXml(xml);
+            
+            Assert.True(true);
         }
     }
 }

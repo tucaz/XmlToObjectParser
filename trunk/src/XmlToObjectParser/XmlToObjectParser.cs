@@ -62,7 +62,18 @@ namespace XmlToObjectParser
                 }
                 else
                 {
-                    child.Add(childElement.Name.LocalName, childElement.Value);
+                    if (child.ContainsKey(childElement.Name.LocalName))
+                    {
+                        var firstValue = child[childElement.Name.LocalName];
+                        child[childElement.Name.LocalName] = new List<dynamic>();
+                        ((List<dynamic>)child[childElement.Name.LocalName]).Add(firstValue);
+                        ((List<dynamic>)child[childElement.Name.LocalName]).Add(childElement.Value);
+                    }
+                    else
+                    {
+                        child.Add(childElement.Name.LocalName, childElement.Value);
+                    }                    
+                    
                     if (!child.ContainsKey("NodeName"))
                         child.Add("NodeName", parent.Name.LocalName);
                 }
